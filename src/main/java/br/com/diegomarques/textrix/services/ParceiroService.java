@@ -6,8 +6,13 @@ import br.com.diegomarques.textrix.domains.dtos.ParceiroDTO;
 import br.com.diegomarques.textrix.domains.dtos.ParceiroNovoDTO;
 import br.com.diegomarques.textrix.repositories.EnderecoRepository;
 import br.com.diegomarques.textrix.repositories.ParceiroRepository;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ParceiroService {
@@ -26,6 +31,29 @@ public class ParceiroService {
             enderecoRepository.save(parceiro.getEndereco());
 
         return new ParceiroDTO(parceiro);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ParceiroDTO> findAll() {
+        return parceiroRepository.findAll()
+                .stream()
+                .map(ParceiroDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public ParceiroDTO findById(Long chave) {
+        return parceiroRepository.findByChaveAndExcluidoFalse(chave)
+                .map(ParceiroDTO::new)
+                .orElseThrow(() -> new IllegalArgumentException("Parceiro não encontrado! Chave: " + chave));
+    }
+
+    @Transactional(readOnly = true)
+    public List<ParceiroDTO> findAtivos() {
+        return parceiroRepository.findByExcluidoFalse()
+                .stream()
+                .map(ParceiroDTO::new)
+                .collect(Collectors.toList());
     }
 
     public Parceiro toEntity(ParceiroNovoDTO parceiroNovoDTO) {
