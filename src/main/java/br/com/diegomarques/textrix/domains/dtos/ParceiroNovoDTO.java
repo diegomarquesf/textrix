@@ -26,11 +26,11 @@ public class ParceiroNovoDTO implements Serializable {
     private String nomeFantasia;
 
     @CNPJ
-    @Size(min = 14, max = 14)
+    @Size(min = 11, max = 14)
     private String cnpj;
 
     @CPF
-    @Size(min = 11, max = 11)
+    @Size(min = 14, max = 14)
     private String cpf;
 
     @Valid
@@ -90,7 +90,7 @@ public class ParceiroNovoDTO implements Serializable {
         return endereco;
     }
 
-    public void setEnderecoDTO(EnderecoDTO endereco) {
+    public void setEndereco(EnderecoDTO endereco) {
         this.endereco = endereco;
     }
 }

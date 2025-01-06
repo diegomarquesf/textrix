@@ -29,7 +29,17 @@ public class EnderecoDTO implements Serializable {
 
     private boolean excluido;
 
-    public EnderecoDTO(Endereco endereco) { }
+    public EnderecoDTO() { }
+
+    public EnderecoDTO(Endereco endereco) {
+        this.logradouro = endereco.getLogradouro();
+        this.numero = endereco.getNumero();
+        this.bairro = endereco.getBairro();
+        this.complemento = endereco.getComplemento();
+        this.cidade = endereco.getCidade();
+        this.estado = endereco.getEstado();
+        this.cep = endereco.getCep();
+    }
 
     public String getLogradouro() {
         return logradouro;
