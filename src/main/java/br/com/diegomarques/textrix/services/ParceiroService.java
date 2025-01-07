@@ -6,7 +6,7 @@ import br.com.diegomarques.textrix.domains.dtos.ParceiroDTO;
 import br.com.diegomarques.textrix.domains.dtos.ParceiroNovoDTO;
 import br.com.diegomarques.textrix.repositories.EnderecoRepository;
 import br.com.diegomarques.textrix.repositories.ParceiroRepository;
-import org.hibernate.ObjectNotFoundException;
+import br.com.diegomarques.textrix.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +23,7 @@ public class ParceiroService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
+    @Transactional
     public ParceiroDTO create(ParceiroNovoDTO parceiroNovoDTO) {
         Parceiro parceiro = toEntity(parceiroNovoDTO);
 
@@ -45,7 +46,7 @@ public class ParceiroService {
     public ParceiroDTO findById(Long chave) {
         return parceiroRepository.findByChaveAndExcluidoFalse(chave)
                 .map(ParceiroDTO::new)
-                .orElseThrow(() -> new IllegalArgumentException("Parceiro não encontrado! Chave: " + chave));
+                .orElseThrow(() -> new ObjectNotFoundException("Parceiro não encontrado! Chave: " + chave));
     }
 
     @Transactional(readOnly = true)

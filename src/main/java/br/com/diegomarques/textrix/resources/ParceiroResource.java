@@ -33,22 +33,16 @@ public class ParceiroResource {
 
     @GetMapping("/todos")
     public ResponseEntity<List<ParceiroDTO>> findAll() {
-        List<ParceiroDTO> parceiros = parceiroServices.findAll();
-        return ResponseEntity.ok(parceiros);
+        return ResponseEntity.ok(parceiroServices.findAll());
     }
 
     @GetMapping("/ativos/{chave}")
     public ResponseEntity<ParceiroDTO> findById(@PathVariable Long chave) {
-        try {
-            return ResponseEntity.ok(parceiroServices.findById(chave));
-        } catch (ObjectNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(parceiroServices.findById(chave));
     }
 
     @GetMapping("/ativos")
     public ResponseEntity<List<ParceiroDTO>> findAtivos() {
-        List<ParceiroDTO> parceiros = parceiroServices.findAtivos();
-        return parceiros.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(parceiros);
+        return ResponseEntity.ok(parceiroServices.findAtivos());
     }
 }
