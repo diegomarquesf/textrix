@@ -45,4 +45,9 @@ public class ParceiroResource {
     public ResponseEntity<List<ParceiroDTO>> findAtivos() {
         return ResponseEntity.ok(parceiroServices.findAtivos());
     }
+
+    @PutMapping("/{chave}")
+    public ResponseEntity<ParceiroDTO> update(@PathVariable Long chave, @RequestBody ParceiroDTO parceiroDTO) {
+        return ResponseEntity.ok(parceiroServices.update(chave, parceiroDTO));
+    }
 }
