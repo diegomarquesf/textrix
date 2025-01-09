@@ -50,4 +50,10 @@ public class ParceiroResource {
     public ResponseEntity<ParceiroDTO> update(@PathVariable Long chave, @RequestBody ParceiroDTO parceiroDTO) {
         return ResponseEntity.ok(parceiroServices.update(chave, parceiroDTO));
     }
+
+    @DeleteMapping("/{chave}")
+    public ResponseEntity<Void> delete(@PathVariable Long chave) {
+        parceiroServices.delete(chave);
+        return ResponseEntity.noContent().build();
+    }
 }

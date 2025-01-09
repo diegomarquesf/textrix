@@ -71,6 +71,21 @@ public class ParceiroService {
                 .orElseThrow(() -> new ObjectNotFoundException("Parceiro não encontrado! Chave: " + chave));
     }
 
+    @Transactional
+    public void delete(Long chave) {
+        Parceiro parceiro = parceiroRepository.findByChaveAndExcluidoFalse(chave)
+                .orElseThrow(() -> new ObjectNotFoundException("Parceiro não encontrado! Chave: " + chave));
+
+        parceiro.setExcluido(true);
+        if (parceiro.getEndereco() != null)
+            parceiro.getEndereco().setExcluido(true);
+
+        parceiroRepository.save(parceiro);
+
+        if (parceiro.getEndereco() != null)
+            enderecoRepository.save(parceiro.getEndereco());
+    }
+
     private void updateParceiroFromDTO(Parceiro parceiro, ParceiroDTO dto) {
         if (dto.getNome() != null) parceiro.setNome(dto.getNome());
         if (dto.getNomeFantasia() != null) parceiro.setNomeFantasia(dto.getNomeFantasia());
