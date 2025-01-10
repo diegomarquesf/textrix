@@ -26,11 +26,9 @@ public class ParceiroNovoDTO implements Serializable {
     private String nomeFantasia;
 
     @CNPJ
-    @Size(min = 11, max = 14)
     private String cnpj;
 
     @CPF
-    @Size(min = 14, max = 14)
     private String cpf;
 
     @Valid

@@ -8,6 +8,8 @@ import br.com.diegomarques.textrix.domains.dtos.ParceiroNovoDTO;
 import br.com.diegomarques.textrix.repositories.EnderecoRepository;
 import br.com.diegomarques.textrix.repositories.ParceiroRepository;
 import br.com.diegomarques.textrix.services.exceptions.ObjectNotFoundException;
+import br.com.diegomarques.textrix.validators.CnpjValidator;
+import br.com.diegomarques.textrix.validators.CpfValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +25,9 @@ public class ParceiroService {
 
     @Autowired
     private EnderecoRepository enderecoRepository;
+
+    @Autowired
+    private ValidationService validationService;
 
     @Transactional
     public ParceiroDTO create(ParceiroNovoDTO parceiroNovoDTO) {
@@ -62,6 +67,12 @@ public class ParceiroService {
     public ParceiroDTO update(Long chave, ParceiroDTO parceiroDTO) {
         if (chave == null || !chave.equals(parceiroDTO.getChave()))
             throw new IllegalArgumentException("A chave fornecida não corresponde à chave do DTO.");
+
+        if (parceiroDTO.getCpf() != null)
+            validationService.validate(CpfValidator.class, parceiroDTO.getCpf());
+
+        if (parceiroDTO.getCnpj() != null)
+            validationService.validate(CnpjValidator.class, parceiroDTO.getCnpj());
 
         return parceiroRepository.findByChaveAndExcluidoFalse(parceiroDTO.getChave())
                 .map(parceiro -> {
