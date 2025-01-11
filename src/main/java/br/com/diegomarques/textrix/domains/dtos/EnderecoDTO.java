@@ -1,29 +1,37 @@
 package br.com.diegomarques.textrix.domains.dtos;
 
 import br.com.diegomarques.textrix.domains.Endereco;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 
 public class EnderecoDTO implements Serializable {
 
+    @Schema(description = "Logradouro", example = "Rua das Flores")
     @NotBlank(message = "O campo 'Logradouro' é necessário!")
     private String logradouro;
 
+    @Schema(description = "Número do endereço", example = "10")
     @NotBlank(message = "O campo 'Número' é necessário!")
     private String numero;
 
+    @Schema(description = "Bairro", example = "Centro")
     @NotBlank(message = "O campo 'Bairro' é necessário!")
     private String bairro;
 
+    @Schema(description = "Complemento do endereço", example = "Casa A")
     private String complemento;
 
+    @Schema(description = "Cidade", example = "São Paulo")
     @NotBlank(message = "O campo 'Cidade' é necessário!")
     private String cidade;
 
+    @Schema(description = "Estado", example = "SP")
     @NotBlank(message = "O campo 'Estado' é necessário!")
     private String estado;
 
+    @Schema(description = "CEP", example = "01010-001")
     @NotBlank(message = "O campo 'CEP' é necessário!")
     private String cep;
 

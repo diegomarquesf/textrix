@@ -2,6 +2,7 @@ package br.com.diegomarques.textrix.domains.dtos;
 
 import br.com.diegomarques.textrix.domains.enums.TipoNaturezaJuridica;
 import br.com.diegomarques.textrix.domains.enums.TipoParceiro;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,24 +14,31 @@ import java.io.Serializable;
 
 public class ParceiroNovoDTO implements Serializable {
 
+    @Schema(description = "Tipo de natureza jurídica do parceiro", example = "PESSOA_JURIDICA")
     @NotNull(message = "O campo 'Tipo Pessoa' é necessário!")
     private TipoNaturezaJuridica tipoNaturezaJuridica;
 
+    @Schema(description = "Tipo de parceiro (Cliente ou Fornecedor)", example = "CLIENTE")
     @NotNull(message = "O campo 'Tipo Parceiro' é necessário!")
     private TipoParceiro tipoParceiro;
 
+    @Schema(description = "Nome/Empresa do parceiro", example = "Empresa XX")
     @NotBlank(message = "O campo 'Nome' é necessário!")
     private String nome;
 
+    @Schema(description = "Nome fantasia do parceiro", example = "Empresa ABC")
     @NotBlank(message = "O campo 'Nome Fantasia' é necessário!")
     private String nomeFantasia;
 
+    @Schema(description = "CNPJ do parceiro, se aplicável", example = "12345678000199")
     @CNPJ
     private String cnpj;
 
+    @Schema(description = "CPF do parceiro, se aplicável", example = "12345678900")
     @CPF
     private String cpf;
 
+    @Schema(description = "Dados do endereço do parceiro")
     @Valid
     private EnderecoDTO endereco;
 

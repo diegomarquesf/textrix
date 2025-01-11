@@ -4,22 +4,40 @@ import br.com.diegomarques.textrix.domains.Parceiro;
 import br.com.diegomarques.textrix.domains.enums.TipoNaturezaJuridica;
 import br.com.diegomarques.textrix.domains.enums.TipoParceiro;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class ParceiroDTO implements Serializable {
 
+    @Schema(description = "Identificador único do parceiro", example = "1")
     private Long chave;
 
+    @Schema(description = "Data de criação do parceiro")
     private LocalDateTime dataCriacao;
+
+    @Schema(description = "Tipo de natureza jurídica do parceiro", example = "PESSOA_JURIDICA")
     private TipoNaturezaJuridica tipoNaturezaJuridica;
+
+    @Schema(description = "Tipo de parceiro (Cliente ou Fornecedor)", example = "CLIENTE")
     private TipoParceiro tipoParceiro;
+
+    @Schema(description = "Nome/Empresa do parceiro", example = "Empresa XX")
     private String nome;
+
+    @Schema(description = "Nome fantasia do parceiro", example = "Empresa ABC")
     private String nomeFantasia;
+
+    @Schema(description = "CNPJ do parceiro, se aplicável", example = "12345678000199")
     private String cnpj;
+
+    @Schema(description = "CPF do parceiro, se aplicável", example = "12345678900")
     private String cpf;
+
+    @Schema(description = "Dados do endereço do parceiro")
     private EnderecoDTO endereco;
+
     private boolean excluido;
 
     public ParceiroDTO() {}
