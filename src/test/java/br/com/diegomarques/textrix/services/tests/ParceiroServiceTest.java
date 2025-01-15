@@ -64,7 +64,6 @@ public class ParceiroServiceTest {
         assertNotNull(parceiroResult);
         assertEquals("Parceiro Novo", parceiroResult.getNome());
         verify(parceiroRepository).save(any(Parceiro.class));
-        verify(parceiroRepository).save(any(Parceiro.class));
         verify(enderecoRepository).save(any());
     }
 
