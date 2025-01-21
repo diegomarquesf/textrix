@@ -1,7 +1,7 @@
 # Textrix
-Um projeto robusto de CRUD de Parceiros com Spring Boot 🚀  
+Um projeto robusto de CRUD de Parceiros com Spring Boot 🚀  **(Em continuação)**
 
-## 📖 Sobre o Projeto
+## 📖 **Sobre o Projeto**
 **Textrix** é um projeto desenvolvido com Java 17 e Spring Boot. Ele implementa um CRUD completo com configurações para produção e homologação, MySQL (produção) e H2 (homologação).  
 
 # Principais recursos incluem:  
@@ -10,7 +10,7 @@ Um projeto robusto de CRUD de Parceiros com Spring Boot 🚀
 - Validações personalizadas e documentação com **Springdoc OpenAPI**.  
 - Testes unitários, de integração e de ponta a ponta.
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ **Tecnologias Utilizadas**
 As principais ferramentas e bibliotecas usadas no projeto:  
 
 | Tecnologia             | Versão        | Descrição                            |
@@ -23,34 +23,40 @@ As principais ferramentas e bibliotecas usadas no projeto:
 | Maven                  | 3.x           | Gerenciador de dependências          |
 | IntelliJ IDEA          | Última        | IDE recomendada para desenvolvimento |
 
-## ⚙️ Configuração e Execução
+## ⚙️ **Configuração e Execução**
 
-1️⃣ Clone o Repositório 
-git clone https://github.com/diegomarquesf/textrix.git
-cd textrix
+## 1️⃣ Clone o Repositório 
+- git clone https://github.com/diegomarquesf/textrix.git .
+- cd textrix
 
-2️⃣ Configure o Banco de Dados
-# Produção (MySQL):
+## 2️⃣ Configure o Banco de Dados
+### Produção (MySQL):
 Crie um banco de dados no MySQL com o nome textrix.
 Atualize o arquivo application-dev.properties com as credenciais de acesso ao banco de dados.
-# Homologação (H2):
+### Homologação (H2):
 O banco H2 será configurado automaticamente ao rodar o perfil test.
 ** em application.properties mude o profile para o perfil desejado.
 
-## ✨ Principais Funcionalidades
-# Gerenciamento de Parceiros:
-📌 Cadastro, atualização, busca parceiro por chave, listagem parceiros ativos e listagem de todos parceiros.
-🚫 Exclusão lógica com flag excluido.
-# Relacionamentos:
-📍 Relacionamento @OneToOne entre Parceiro e Endereço, com cascata para persistência e atualização.
-# Validações Personalizadas:
-🛡️ Validações customizadas com mensagens detalhadas de erro, melhorando a experiência do usuário e a integridade dos dados.
-# Documentação Interativa:
-🔍 Documentação gerada automaticamente via Springdoc OpenAPI.
-# Testes:
-✅ Testes unitários, de integração e de ponta a ponta (e2e).
+## ✨ **Principais Funcionalidades**
+**Gerenciamento de Parceiros:**
+- 📌 Cadastro, atualização, busca parceiro por chave, listagem parceiros ativos e listagem de todos parceiros.
+- 🚫 Exclusão lógica com flag excluido.
+  
+**Relacionamentos:**
+- 📍 Relacionamento @OneToOne entre Parceiro e Endereço, com cascata para persistência e atualização.
+  
+**Validações Personalizadas:**
+- 🛡️ Validações customizadas com mensagens detalhadas de erro, melhorando a experiência do usuário e a integridade dos dados.
+  
+**Documentação Interativa:**
+- 🔍 Documentação gerada automaticamente via Springdoc OpenAPI.
+  
+**Testes:**
+- ✅ Testes unitários, de integração e de ponta a ponta (e2e).
 
 ## 📄 Estrutura de Diretórios
+
+```plaintext
 textrix
 ├── src
 │   ├── main
@@ -79,10 +85,11 @@ textrix
 │   │   │           └── services     # Testes de integração
 │   │   │       ├── services
 │   │   │           └── tests        # Testes unitários
+```
 
-## 🌐 Documentação da API
+## 🌐 **Documentação da API**
 Após iniciar a aplicação, acesse a documentação interativa da API através do navegador:
 http://localhost:8080/swagger-ui.html
 
-## 📜 Licença
+## 📜 **Licença**
 Este projeto está licenciado sob a MIT License. Consulte o arquivo LICENSE para mais detalhes.
