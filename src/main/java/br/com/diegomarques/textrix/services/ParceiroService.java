@@ -52,7 +52,7 @@ public class ParceiroService {
     public ParceiroDTO findById(Long chave) {
         return parceiroRepository.findByChaveAndExcluidoFalse(chave)
                 .map(ParceiroDTO::new)
-                .orElseThrow(() -> new ObjectNotFoundException("Parceiro não encontrado! Chave: " + chave));
+                .orElseThrow(() -> new ObjectNotFoundException("Parceiro não foi encontrado! Chave: " + chave));
     }
 
     @Transactional(readOnly = true)
