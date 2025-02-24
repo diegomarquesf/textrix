@@ -2,9 +2,9 @@ package br.com.diegomarques.textrix.domains.enums;
 
 public enum TipoRole {
 
-    ROLE_ADM("Administrador"),
-    ROLE_USER1("Usuário 1"),
-    ROLE_USER2("Usuário 2");
+    ADM("Administrador"),
+    USER1("Usuário 1"),
+    USER2("Usuário 2");
 
     private String descricao;
 

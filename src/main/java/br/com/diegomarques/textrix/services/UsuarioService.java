@@ -1,21 +1,20 @@
 package br.com.diegomarques.textrix.services;
 
-import br.com.diegomarques.textrix.domains.Usuario;
-import br.com.diegomarques.textrix.domains.dtos.ParceiroDTO;
 import br.com.diegomarques.textrix.domains.dtos.UsuarioDTO;
 import br.com.diegomarques.textrix.domains.dtos.UsuarioNovoDTO;
+import br.com.diegomarques.textrix.domains.enums.TipoRole;
 import br.com.diegomarques.textrix.domains.mappers.UsuarioMapper;
 import br.com.diegomarques.textrix.repositories.EnderecoRepository;
 import br.com.diegomarques.textrix.repositories.UsuarioRepository;
 import br.com.diegomarques.textrix.services.exceptions.ObjectNotFoundException;
-import br.com.diegomarques.textrix.validators.CnpjValidator;
 import br.com.diegomarques.textrix.validators.CpfValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,9 +32,17 @@ public class UsuarioService {
     @Autowired
     private ValidationService validationService;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     @Transactional
     public UsuarioDTO create(UsuarioNovoDTO usuarioNovoDTO) {
         var usuario = usuarioMapper.toEntityDtoNovo(usuarioNovoDTO);
+        usuario.setSenha(encoder.encode(usuario.getSenha()));
+
+        if (usuario.getRoles() == null || usuario.getRoles().isEmpty())
+            usuario.setRoles(Set.of(TipoRole.USER2));
+
         usuario = usuarioRepository.save(usuario);
 
         if (usuario.getEndereco() != null)
@@ -87,6 +94,9 @@ public class UsuarioService {
     public void disable(Long chave) {
         var usuario = usuarioRepository.findById(chave)
                 .orElseThrow(() -> new ObjectNotFoundException("Usuário não foi encontrado! Chave: " + chave));
+
+        if (!usuario.isAtivo())
+            throw new IllegalArgumentException("Usuário já está desativado!");
 
         usuario.setAtivo(false);
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -15,11 +16,13 @@ import java.util.Set;
 @Entity
 @Table(name = "tb_usuario")
 public class Usuario implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chave;
 
-    @Column(name = "dataCriacao")
+    @CreationTimestamp
+    @Column(name = "dataCriacao", updatable = false)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataCriacao;
 
@@ -55,7 +58,6 @@ public class Usuario implements Serializable {
 
     @PrePersist
     private void prePersist() {
-        this.dataCriacao = LocalDateTime.now();
         this.ativo = true;
     }
 
@@ -66,7 +68,7 @@ public class Usuario implements Serializable {
         this.cpf = cpf;
         this.email = email;
         this.senha = senha;
-        addPerfil(TipoRole.ROLE_USER2);
+        addPerfil(TipoRole.USER2);
     }
 
     public Long getChave() {
