@@ -44,7 +44,7 @@ public class Usuario implements Serializable {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "tb_usuario_roles", joinColumns = @JoinColumn(name = "usuario_id"))
-    @Column(name = "role")
+    @Column(name = "role_nome")
     @Enumerated(EnumType.STRING)
     private Set<TipoRole> roles = new HashSet<>();
 
@@ -68,7 +68,7 @@ public class Usuario implements Serializable {
         this.cpf = cpf;
         this.email = email;
         this.senha = senha;
-        addPerfil(TipoRole.USER2);
+        addPerfil(TipoRole.ROLE_USER2);
     }
 
     public Long getChave() {

@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -27,11 +28,13 @@ public class UsuarioResource {
     @Autowired
     private UsuarioService usuarioServices;
 
+
     @Operation(summary = "Criar um novo usuário")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioDTO.class))),
             @ApiResponse(responseCode = "400", description = "Requisição inválida", content = @Content)
     })
+    @PreAuthorize("hasRole('ROLE_ADM')")
     @PostMapping
     public ResponseEntity<UsuarioDTO> create(@Valid @RequestBody UsuarioNovoDTO usuarioNovoDTO) {
         UsuarioDTO usuario = usuarioServices.create(usuarioNovoDTO);
@@ -45,6 +48,7 @@ public class UsuarioResource {
 
     @Operation(summary = "Busca todos os usuários")
     @ApiResponse(responseCode = "200", description = "Lista de todos os usuários retornado com sucesso", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = UsuarioDTO.class))))
+    @PreAuthorize("hasAnyRole('ADM', 'USER1', 'USER2')")
     @GetMapping("/todos")
     public ResponseEntity<List<UsuarioDTO>> findAll() {
         return ResponseEntity.ok(usuarioServices.findAll());
@@ -52,6 +56,7 @@ public class UsuarioResource {
 
     @Operation(summary = "Busca todos os usuários ativos")
     @ApiResponse(responseCode = "200", description = "Lista de usuários ativos retornada com sucesso", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = UsuarioDTO.class))))
+    @PreAuthorize("hasAnyRole('ADM', 'USER1', 'USER2')")
     @GetMapping("/ativos")
     public ResponseEntity<List<UsuarioDTO>> findAtivos() {
         return ResponseEntity.ok(usuarioServices.findAtivos());
@@ -62,6 +67,7 @@ public class UsuarioResource {
             @ApiResponse(responseCode = "200", description = "Usuário encontrado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioDTO.class))),
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
+    @PreAuthorize("hasAnyRole('ADM', 'USER1', 'USER2')")
     @GetMapping("/ativos/{chave}")
     public ResponseEntity<UsuarioDTO> findById(@PathVariable Long chave) {
         return ResponseEntity.ok(usuarioServices.findByChave(chave));
@@ -74,6 +80,7 @@ public class UsuarioResource {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
     @PutMapping("/{chave}")
+    @PreAuthorize("hasRole('ADM')")
     public ResponseEntity<UsuarioDTO> update(@PathVariable Long chave, @RequestBody UsuarioDTO usuarioDTO) {
         return ResponseEntity.ok(usuarioServices.update(chave, usuarioDTO));
     }
@@ -83,6 +90,7 @@ public class UsuarioResource {
             @ApiResponse(responseCode = "204", description = "Usuário desativado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
+    @PreAuthorize("hasRole('ADM')")
     @DeleteMapping("/{chave}")
     public ResponseEntity<Void> delete(@PathVariable Long chave) {
         usuarioServices.disable(chave);

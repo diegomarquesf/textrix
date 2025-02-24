@@ -41,7 +41,7 @@ public class UsuarioService {
         usuario.setSenha(encoder.encode(usuario.getSenha()));
 
         if (usuario.getRoles() == null || usuario.getRoles().isEmpty())
-            usuario.setRoles(Set.of(TipoRole.USER2));
+            usuario.setRoles(Set.of(TipoRole.ROLE_USER2));
 
         usuario = usuarioRepository.save(usuario);
 
